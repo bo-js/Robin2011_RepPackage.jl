@@ -1,5 +1,32 @@
 module Robin2011_RepPackage
 
-# Write your package code here.
+using LinearAlgebra
+using Distributions
+
+function matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
+    return y * (B * x .+ C)'
+end
+
+function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.75, z0::Number = 0.766752794650811)
+    return z0 .+ α * (matchprod(x, y; B, C) .- z0)
+end
+
+function SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.946603693905558)
+    S = (I(length(Π[1,:])) - β * Π )\(p - z)
+    e = norm(S - max.(S, 0), 2)
+
+    while e > 0.00001
+        S1 = S
+        S = p - z + β * Π * max.(S, 0)
+        e = norm(S - S1, 2)
+    end
+
+    return S
+end
+
+
+export SurplusVFI
+export matchprod
+export homeprod
 
 end
