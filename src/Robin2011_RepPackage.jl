@@ -30,7 +30,7 @@ end
 
 export matchprod
 export homeprod
-
+export SurplusVFI
 
 
 
