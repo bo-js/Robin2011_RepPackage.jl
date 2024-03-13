@@ -28,6 +28,6 @@ rowSums = sum(P, dims=2)
 # Normalize P such that each row sums to 1
 Π = P ./ rowSums
 
-p = buildingblocks.matchprod(x,y)
-z = buildingblocks.homeprod(x,y)
-buildingblocks.SurplusVFI(p,z,Π) 
+p = matchprod(x,y)
+z = homeprod(x,y)
+SurplusVFI(p,z,Π) 
