@@ -8,6 +8,13 @@ N = 100
 
 x = collect(LinRange(trim, 1-trim, M))
 
+μ = 5.786082109731152
+ν = 2.019365636076711
+
+
+l = pdf(Beta(μ,ν), x)
+l = l./sum(l)
+
 F = LinRange(trim, 1-trim, N)
 
 # Manual meshgrid creation
