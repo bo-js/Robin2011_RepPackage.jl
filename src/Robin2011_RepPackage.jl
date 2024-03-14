@@ -24,8 +24,11 @@ function SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.94660369390
     return S
 end
 
+include("wages.jl")
+
 
 export SurplusVFI
+export WageVFI
 export matchprod
 export homeprod
 
