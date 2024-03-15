@@ -26,6 +26,8 @@ end
 
 include("wages.jl")
 
+include("dynamics.jl")
+
 
 export SurplusVFI
 export WageVFI
