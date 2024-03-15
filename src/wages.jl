@@ -1,12 +1,15 @@
 function WageVFI(S::Matrix, Π::Matrix, z::Matrix; λ1::Number = 0.119345383430366, β::Number = 0.946603693905558)
     
+    N = length(Π[1, :])
+    M = length(S[1, :])
+
     Wmin = zeros(N, N, M)
     Wmax = zeros(N, N, M)
     wmin = zeros(N, M)
     wmax = zeros(N, M)
 
-    for m in 1:length(S[1, :])
-        for i in 1:length(Π[1, :])
+    for m in 1:length(M)
+        for i in 1:length(N)
 
             # Minimum Wages - W is a vector giving the worker surplus of being in each state with the minimum wage set for state i
             A = (Π - repeat(Π[i, :]', N, 1)) * repeat((S[:, m] .> 0)', N, 1)
