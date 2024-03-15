@@ -25,11 +25,13 @@ function SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.94660369390
 end
 
 include("wages.jl")
+include("dynamics.jl")
 
 
 export SurplusVFI
 export WageVFI
 export matchprod
 export homeprod
+export SteadyStateUnempl
 
 end

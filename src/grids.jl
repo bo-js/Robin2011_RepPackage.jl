@@ -17,3 +17,14 @@ cop = Gaussian(ρ)
 P = [density(cop, F[i], F[j]) for i in 1:N, j in 1:N ]
 
 Π = [P[i, j]/sum(P[i, :]) for i in 1:N, j in 1:N]
+
+μ = 5.786082109731152
+ν = 2.019365636076711
+
+l = pdf(Beta(μ,ν), x)
+l = l./sum(l)
+
+
+
+
+
