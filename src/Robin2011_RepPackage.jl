@@ -28,7 +28,7 @@ include("wages.jl")
 
 include("dynamics.jl")
 
-
+export wage_dens_path
 export SurplusVFI
 export WageVFI
 export matchprod
