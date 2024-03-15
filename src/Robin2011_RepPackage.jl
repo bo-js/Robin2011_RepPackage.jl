@@ -31,9 +31,7 @@ function SteadyStateUnempl(Sx::Matrix; δ::Number = 0.041563759920623, ϕ::Numbe
     ux = (δ / (δ + ϕ)) * (Sx .> 0) + (Sx .<= 0)
 end
 
-Sx = SurplusVFI(p,z,Π)
 
-ux = SteadyStateUnempl(Sx)
 
 export matchprod
 export homeprod
@@ -44,27 +42,31 @@ export SteadyStateUnempl
 
 # turnover dynamics
 
-    # parameters for grid
+    # Sx = SurplusVFI(p,z,Π)
 
-    burn = 0
-    T = 239
-    T1 = burn + T
-    uxt = ones(T1 + 1, M)
-    Ft = ones(T1, 1)
-    yt = ones(T1,1)
-    statet = zeros(T1,1)
+    # ux = SteadyStateUnempl(Sx)
 
-    # initial condition
-    i = 100
-    Ft[1,] = F[i,]
-    yt[1,] = yt[i,]
-    statet[1,] = i
-    uxt[1,:] = ux[i,:]
-    res = zeros(T,2)
+    # # parameters for grid
 
-    if burn > 0
-        draw = [randn(burn); draw]  # Prepend `burn` random values to `draw`
-    end
+    # burn = 0
+    # T = 239
+    # T1 = burn + T
+    # uxt = ones(T1 + 1, M)
+    # Ft = ones(T1, 1)
+    # yt = ones(T1,1)
+    # statet = zeros(T1,1)
+
+    # # initial condition
+    # i = 100
+    # Ft[1,] = F[i,]
+    # yt[1,] = yt[i,]
+    # statet[1,] = i
+    # uxt[1,:] = ux[i,:]
+    # res = zeros(T,2)
+
+    # if burn > 0
+    #     draw = [randn(burn); draw]  # Prepend `burn` random values to `draw`
+    # end
     
 
 
