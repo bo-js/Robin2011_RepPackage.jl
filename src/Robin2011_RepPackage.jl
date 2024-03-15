@@ -33,5 +33,6 @@ export SurplusVFI
 export WageVFI
 export matchprod
 export homeprod
+export unemp_path
 
 end
