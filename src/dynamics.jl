@@ -23,13 +23,15 @@ function wage_dens_path(S::Matrix, ut::Matrix, wd::Dict, l::Vector, U::Matrix, s
     Wmin = wd[:Wmin]
     Wmax = wd[:Wmax]
 
+    # Define First Period from Steady State
     gt[1, statet[1], :, 1] = [(λ0 * (S[statet[1], m] > 0) * ut[1, m] * l[m])/(1 - (1 - δ) * (S[statet[1], m] > 0) * (1 - λ1)) for m in 1:M]
     
     gt[1, statet[1], :, 2] = [((1 - δ) * λ1 * (1 - ut[1, m]) * (S[statet[1], m] > 0) * l[m])/(1 - (1 - δ) * (S[statet[1], m] > 0) * (1 - λ1)) for m in 1:M]
 
+    # Define subsequent Periods Recurively
     for t in 2:T
         for i in 1:N
-            if statet[t] == i
+            if statet[t] == i # For wages being assigned in current period's state
                 
                 gt[t, i, :, 1] = [(S[statet[t], m] > 0) * (λ0 * ut[t-1, m] * l[m] + (1 - δ) * (1 - λ1) * (
                     gt[t-1, i, m, 1] + sum(
@@ -53,7 +55,7 @@ function wage_dens_path(S::Matrix, ut::Matrix, wd::Dict, l::Vector, U::Matrix, s
                     )
                 for m in 1:M]
 
-            else
+            else # For wages still viable in this state, but not being actively assigned.
 
                 gt[t, i, :, 1] = [
                     (S[statet[t], m] > 0) * (1 - δ) * (1 - λ1) * (0 ≤ Wmin[statet[t], i, m] - U[state[t], m] ≤ S[statet[t], m])
