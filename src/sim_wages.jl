@@ -1,7 +1,11 @@
 using CSV
 using DataFrames
 using Distributions
+using LinearAlgebra
 using Robin2011_RepPackage
+
+
+r::Number = 0.05/4
 
 ## Parameter Values - Change for when we estimate
 δ::Number = 0.041563759920623
@@ -10,7 +14,6 @@ using Robin2011_RepPackage
 ρ = 0.913702234286476
 ν::Number = 2.019365636076711
 μ::Number = 5.786082109731152
-
 
 
 dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
@@ -41,6 +44,7 @@ include("grids.jl")
 p = matchprod(x, y)
 z = homeprod(x, y)
 Sx = SurplusVFI(p, z, Π)
+Ux = (I(N) - Π./(1 + r))\z
 
 ## Wages
 wd = WageVFI(Sx, Π, z)
@@ -54,7 +58,7 @@ T1 = burn+T;
 Ft = ones(T1)
 uxt = ones(T1+1, M)
 yt = ones(T1)
-statet=zeros(T1)
+statet = zeros(Int, T1)
 Wqua=zeros(T1,9);
 wqua=zeros(T1,9);
 # wminqua=zeros(T1,9);
@@ -67,7 +71,7 @@ varwmean=zeros(T1);
 i = min(sum(y.-prod[1] .<= 0), N);
 Ft[1] = F[i];
 yt[1] = y[i];
-statet[1] = y[i];
+statet[1] = i;
 uxt[1, :] = ux[i,:]
 
 ## Productivity and Unemployment Dynamics
@@ -80,13 +84,13 @@ for t in 1:(burn+T)
     
     ut = uxt_1 * l
     
-    i = argmin(abs.(xt .- prod[1]))
+    global i = argmin(abs.(xt .- prod[t]))
     statet[t] = i
     yt[t] = y[i]
 
     uxt[t+1, :] = [1 - (Sx[i, m] > 0) * ((1 - δ) * (1 - uxt[t, m]) + λ0 * uxt[t, m]) for m in 1:M]
 end
 
-#wdp = wage_dens_path(S, uxt, wd, l, U, statet, T)
+wd = wage_dens_path(Sx, uxt, wd, l, Ux, statet, T)
 
 

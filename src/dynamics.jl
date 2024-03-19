@@ -36,9 +36,9 @@ function wage_dens_path(S::Matrix, uxt::Matrix, wd::Dict, l::Vector, U::Matrix, 
                 gt[t, i, :, 1] = [(S[statet[t], m] > 0) * (λ0 * uxt[t-1, m] * l[m] + (1 - δ) * (1 - λ1) * (
                     gt[t-1, i, m, 1] + sum(
                         
-                        (Wmin[statet[t], k, m] - U[statet[t], m] < 0) * g[t-1, k, m, 1] + 
+                        (Wmin[statet[t], k, m] - U[statet[t], m] < 0) * gt[t-1, k, m, 1] + 
                         
-                        (Wmax[statet[t], k, m] - U[statet[t], m] < 0) * g[t-1, k, m, 2] for k in 1:M
+                        (Wmax[statet[t], k, m] - U[statet[t], m] < 0) * gt[t-1, k, m, 2] for k in 1:N
                     )
                 )) for m in 1:M]
 
@@ -47,9 +47,9 @@ function wage_dens_path(S::Matrix, uxt::Matrix, wd::Dict, l::Vector, U::Matrix, 
                         λ1 * (1 - uxt[t - 1, m]) * l[m] + (1 - λ1) * (
                             gt[t - 1, i, m, 2] + sum(
                                 
-                                (Wmin[statet[t], k, m] - U[statet[t], m] > S[statet[t], m]) * g[t-1, k, m, 1] + 
+                                (Wmin[statet[t], k, m] - U[statet[t], m] > S[statet[t], m]) * gt[t-1, k, m, 1] + 
                         
-                                (Wmax[statet[t], k, m] - U[statet[t], m] > S[statet[t], m]) * g[t-1, k, m, 2] for k in 1:M
+                                (Wmax[statet[t], k, m] - U[statet[t], m] > S[statet[t], m]) * gt[t-1, k, m, 2] for k in 1:N
                             )
                         )
                     )
@@ -58,12 +58,12 @@ function wage_dens_path(S::Matrix, uxt::Matrix, wd::Dict, l::Vector, U::Matrix, 
             else # For wages still viable in this state, but not being actively assigned.
 
                 gt[t, i, :, 1] = [
-                    (S[statet[t], m] > 0) * (1 - δ) * (1 - λ1) * (0 ≤ Wmin[statet[t], i, m] - U[state[t], m] ≤ S[statet[t], m])
+                    (S[statet[t], m] > 0) * (1 - δ) * (1 - λ1) * (0 ≤ Wmin[statet[t], i, m] - U[statet[t], m] ≤ S[statet[t], m])
                     for m in 1:M
                 ]
 
                 gt[t, i, :, 2] = [
-                    (S[statet[t], m] > 0) * (1 - δ) * (1 - λ1) * (0 ≤ Wmax[statet[t], i, m] - U[state[t], m] ≤ S[statet[t], m])
+                    (S[statet[t], m] > 0) * (1 - δ) * (1 - λ1) * (0 ≤ Wmax[statet[t], i, m] - U[statet[t], m] ≤ S[statet[t], m])
                     for m in 1:M
                 ]
 
