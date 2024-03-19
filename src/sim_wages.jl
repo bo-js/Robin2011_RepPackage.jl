@@ -14,6 +14,7 @@ r::Number = 0.05/4
 ρ = 0.913702234286476
 ν::Number = 2.019365636076711
 μ::Number = 5.786082109731152
+τ::Number = 0.5
 
 
 dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
@@ -81,9 +82,7 @@ for t in 1:(burn+T)
     ext = repeat(l', N, 1) .* (1 .- uxt_1)
     et = sum(ext, dims = 2)
     xt = vec(sum(p .* ext, dims = 2)./et)
-    
-    ut = uxt_1 * l
-    
+        
     global i = argmin(abs.(xt .- prod[t]))
     statet[t] = i
     yt[t] = y[i]
@@ -91,7 +90,12 @@ for t in 1:(burn+T)
     uxt[t+1, :] = [1 - (Sx[i, m] > 0) * ((1 - δ) * (1 - uxt[t, m]) + λ0 * uxt[t, m]) for m in 1:M]
 end
 
+ut = uxt * l
+
 ## Wage Dynamics
-wd = wage_dens_path(Sx, uxt, wd, l, Ux, statet, T)
+wdt = wage_dens_path(Sx, uxt, wd, l, Ux, statet, T1)
 
-
+## Turnover Dynamics
+ft = [λ0 * sum((Sx[statet[t], m] > 0) * uxt[t, m] * l[m] for m in 1:M)/ut[t] for t in 1:T1]
+qt = [τ * λ1 * (1 - δ) * sum((Sx[statet[t], m] > 0) * (1 - uxt[t, m]) * l[m] for m in 1:M)/(1 - ut[t]) for t in 1:T1]
+st = [δ + (1 - δ) * sum((Sx[statet[t], m] ≤ 0) * (1 - uxt[t, m]) * l[m] for m in 1:M)/(1 - ut[t]) for t in 1:T1]
