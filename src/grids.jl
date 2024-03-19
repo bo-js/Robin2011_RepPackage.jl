@@ -9,8 +9,8 @@ N = 100
 x = collect(LinRange(trim, 1 - trim, M))
 F = collect(LinRange(trim, 1- trim, N))
 y = exp.(σ * quantile(Normal(), F))
-
-ρ = 0.913702234286476
+l = pdf(Beta(ν, μ), x)
+l = l ./ sum(l)
 
 cop = Gaussian(ρ)
 
