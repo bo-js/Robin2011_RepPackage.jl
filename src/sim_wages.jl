@@ -91,6 +91,7 @@ for t in 1:(burn+T)
     uxt[t+1, :] = [1 - (Sx[i, m] > 0) * ((1 - δ) * (1 - uxt[t, m]) + λ0 * uxt[t, m]) for m in 1:M]
 end
 
+## Wage Dynamics
 wd = wage_dens_path(Sx, uxt, wd, l, Ux, statet, T)
 
 
