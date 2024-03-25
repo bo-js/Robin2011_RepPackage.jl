@@ -1,5 +1,5 @@
 using Distributions
-using BivariateCopulas
+using Copulas
 
 trim = 0.002
 M = 500
@@ -12,8 +12,11 @@ y = exp.(σ * quantile(Normal(), F))
 l = pdf(Beta(ν, μ), x)
 l = l ./ sum(l)
 
-cop = Gaussian(ρ)
+Σ = [1 ρ
+     ρ 1]
 
-P = [density(cop, F[i], F[j]) for i in 1:N, j in 1:N ]
+cop = GaussianCopula(Σ)
+
+P = [pdf(cop, [F[i], F[j]]) for i in 1:N, j in 1:N ]
 
 Π = [P[i, j]/sum(P[i, :]) for i in 1:N, j in 1:N]
