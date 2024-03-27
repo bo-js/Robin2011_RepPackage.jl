@@ -4,6 +4,8 @@ using Distributions
 using LinearAlgebra
 using Robin2011_RepPackage
 
+M = 500
+N = 100
 
 r::Number = 0.05/4
 
@@ -12,6 +14,7 @@ r::Number = 0.05/4
 λ0::Number = 0.994544861919718
 λ1::Number = 0.119345383430366
 ρ = 0.913702234286476
+σ = 0.0257
 ν::Number = 2.019365636076711
 μ::Number = 5.786082109731152
 τ::Number = 0.5
@@ -39,7 +42,11 @@ qtr = collect(dta.Column9);
 time = year + qtr./4;
 
 ### Define Grids
-include("grids.jl")
+grids = grids(; M = M, N = N, ν = ν, μ = μ, ρ = ρ, σ = σ)
+x = grids[:x]
+y = grids[:y]
+Π = grids[:Π]
+l = grids[:l]
 
 ##Production and Surplus
 p = matchprod(x, y)
