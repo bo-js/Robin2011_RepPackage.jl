@@ -28,6 +28,12 @@ include("wages.jl")
 
 include("dynamics.jl")
 
+include("grids.jl")
+
+include("estCrit.jl")
+
+export estCrit
+export grids
 export wage_dens_path
 export SurplusVFI
 export WageVFI
