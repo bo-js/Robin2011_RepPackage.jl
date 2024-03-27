@@ -5,7 +5,7 @@ function unemp_path(S::Matrix, statet::Vector, T::Integer; λ0::Number = 0.99454
     ut = zeros(T,M)
 
     # initial steady state unemployment
-    ut[1,:] = [(δ / (δ + λ0)) * S[statet[t], m] > 0) + 1 - (S[statet[t],m] > 0) for m in 1:M]
+    ut[1,:] = [(δ / (δ + λ0)) * (S[statet[t], m] > 0) + 1 - (S[statet[t],m] > 0) for m in 1:M]
 
     # unemployment process
     ut[2:T,:] = [1 - ((1 - δ) * (1 - ut[t - 1, m]) + λ0 * ut[t - 1, m]) * (S[statet[t-1], m] > 0) for t in 2:T, m in 1:M]
@@ -28,11 +28,11 @@ function wage_dens_path(S::Matrix, ut::Matrix, wd::Dict, l::Vector, U::Matrix, T
     Wmin = wd[:Wmin]
     Wmax = wd[:Wmax]
 
-    gt[1, statet[1], :, 1] = [(λ0 * (S[statet[1], m] > 0) ut[1,m] * l[m]) / (
-        1 - (1 - δ) * (S[statet[1], m] > 0) * (1 - λ1)  for m in 1:M]
+    gt[1, statet[1], :, 1] = [(λ0 * (S[statet[1], m] > 0) * ut[1,m] * l[m]) / (
+        1 - (1 - δ) * (S[statet[1], m] > 0) * (1 - λ1))  for m in 1:M]
     
-    gt[1, statet[1], :, 1] = [((1 - δ) * λ1 * (1 - ut[1,m]) * (S[statet[1], m] > 0) * l[m]) / (
-        1 - (1 - δ) * (S[statet[1], m] > 0) * (1 - λ1)  for m in 1:M]
+    gt[1, statet[1], :, 2] = [((1 - δ) * λ1 * (1 - ut[1,m]) * (S[statet[1], m] > 0) * l[m]) / (
+        1 - (1 - δ) * (S[statet[1], m] > 0) * (1 - λ1))  for m in 1:M]
 
     for t in 2:T
         for i in 1:N
@@ -43,7 +43,7 @@ function wage_dens_path(S::Matrix, ut::Matrix, wd::Dict, l::Vector, U::Matrix, T
                     (S[statet[t],m] > 0) * (λ0 * ut[t-1, m] * l[m] + (1 - δ) * (1 - λ1) * (
                         gt[t-1, i, m, 1] + 
                         sum((Wmin[statet[t], k, m] - U[statet[t], m] < 0) * g[t-1, k, m, 1] 
-                        + (Wmax[statet[t], k, m] - U[statet[t], m] < 0) * g[t-1, k, m, 2]) 
+                        + (Wmax[statet[t], k, m] - U[statet[t], m] < 0) * g[t-1, k, m, 2] 
                     ))) 
                     for k in 1:M
                 ]
