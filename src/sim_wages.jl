@@ -42,11 +42,12 @@ qtr = collect(dta.Column9);
 time = year + qtr./4;
 
 ### Define Grids
-grids = grids(; M = M, N = N, ν = ν, μ = μ, ρ = ρ, σ = σ)
-x = grids[:x]
-y = grids[:y]
-Π = grids[:Π]
-l = grids[:l]
+grid = grids(; M = M, N = N, ν = ν, μ = μ, ρ = ρ, σ = σ)
+x = grid[:x]
+y = grid[:y]
+F = grid[:F]
+Π = grid[:Π]
+l = grid[:l]
 
 ##Production and Surplus
 p = matchprod(x, y)
