@@ -67,8 +67,8 @@ params_in = Dict(
     :C => C
 )
 
-T = 10000;
-burn = 2000;
+T = 5000;
+burn = 1000;
 Random.seed!(42)
 draw = rand(burn+T, 1)
 
@@ -81,7 +81,12 @@ x0 = [log(ν), log(μ), loginv(δ), loginv(λ0), atanh(ρ), log(σ), log(z0), lo
 f = OptimizationFunction((b, _) -> estCrit(b; draw = draw, burn = burn, b0 = b0, T = T, τ = τ, α = α, r = r, N = N, M = M))
 
 prob = OptimizationProblem(f, x0)
-sol = solve(prob, NLopt.LN_NELDERMEAD(); maxiters = 100000,reltol = 1e-4 )
+
+function callback()
+    
+    return false
+end
+sol = solve(prob, NLopt.LN_COBYLA(); maxiters = 100000,reltol = 1e-4 )
 
 params_opt = sol.u
 
