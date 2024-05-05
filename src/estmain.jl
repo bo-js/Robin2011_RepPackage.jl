@@ -2,6 +2,10 @@ using Robin2011_RepPackage
 using CSV
 using DataFrames
 using Distributions
+using Random
+using Optimization
+using OptimizationNLopt
+using DelimitedFiles
 
 # Initialisation
 global N = 150
@@ -46,15 +50,27 @@ b = parse.(Float64, readlines("x0.txt"))
 ν = exp(b[1])
 μ = exp(b[2])
 δ = logit(b[3])
-λ0 = logit(b[3])
+λ0 = logit(b[4])
 ρ = tanh(b[5])
 σ = exp(b[6])
 z0 = exp(b[7])
 C = exp(b[8])
 B = 1
 
+params_in = Dict(
+    :ν => ν,
+    :μ => μ,
+    :δ => δ,
+    :λ0 => λ0,
+    :ρ => ρ,
+    :σ => σ,
+    :z0 => z0,
+    :C => C
+)
+
 T = 5000;
 burn = 1000;
+Random.seed!(42)
 draw = rand(burn+T, 1)
 
 ## Estimation
@@ -63,4 +79,23 @@ loginv = x -> log(1/x - 1)
 
 x0 = [log(ν), log(μ), loginv(δ), loginv(λ0), atanh(ρ), log(σ), log(z0), log(C)]
 
-estCrit(b; burn = burn)
+f = OptimizationFunction((b, _) -> estCrit(b; draw = draw, burn = burn, b0 = b0, T = T, τ = τ, α = α, r = r, N = N, M = M))
+
+prob = OptimizationProblem(f, x0)
+
+sol = solve(prob, NLopt.LN_NELDERMEAD(); maxiters = 100000,reltol = 1e-4 )
+
+params_opt = sol.u
+
+params_opt2 = Dict(
+    :ν  => exp(params_opt[1]),
+    :μ => exp(params_opt[2]),
+    :δ => logit(params_opt[3]),
+    :λ0 => logit(params_opt[4]),
+    :ρ => tanh(params_opt[5]),
+    :σ => exp(params_opt[6]),
+    :z0 => exp(params_opt[7]),
+    :C => exp(params_opt[8])
+)
+
+writedlm("x1.txt", params_opt)

@@ -1,11 +1,11 @@
-function estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.5, r = 0.05/4, T = 5000, burn = 1000, draw = rand(burn+T, 1), b0 = [1, 0.0226, 0.9136, 0.0579, 0.2141, 2.5296, 0.7842])
+function estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.64, r = 0.05/4, T = 5000, burn = 1000, draw = rand(burn+T, 1), b0 = [1, 0.0226, 0.9136, 0.0579, 0.2141, 2.5296, 0.7842])
 
     logit = x -> 1/(1 + exp(x))
 
     ν = exp(b[1])
     μ = exp(b[2])
     δ = logit(b[3])
-    λ0 = logit(b[3])
+    λ0 = logit(b[4])
     ρ = tanh(b[5])
     σ = exp(b[6])
     z0 = exp(b[7])
@@ -18,27 +18,25 @@ function estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.5, r = 0.05/4, T = 5000, 
     Π = g[:Π]
     l = g[:l]
 
-    p = matchprod(x, y; B = B, C = C)
+    p = matchprod(x, y; B = 1, C = C)
 
-    z = homeprod(x, y; B = B, C = C, α = α, z0 = z0)
-
-    β = (1 - δ)/(1 + r)
+    z = homeprod(x, y; B = 1, C = C, α = 0.5, z0 = z0)
 
     Ux = (I(N) - Π./(1 + r))\z
 
-    Sx = SurplusVFI(p, z, Π; β = β)
+    Sx = SurplusVFI(p, z, Π; β = (1 - δ)/(1+r))
 
     S = max.(Sx, 0)*l # Aggregate Surplus
     L = (Sx .> 0)*l
 
     ## Steady State
-    ux = (δ/(δ + λ0)).*(Sx .> 0) .+ (Sx .≤ 0)
+    ux = (δ/(δ + λ0)).*(Sx .> 0) + (Sx .≤ 0)
     u = 1 .- δ .* L ./ (δ + λ0)
 
     ## Dynamics
 
     i = Integer(round(N/2))
-    yt = y[i] * ones(T+burn)
+    yt = y[i] .* ones(T+burn)
     uxt = repeat(ux[i, :]', T+burn+1, 1)
     Sxt = repeat(Sx[i, :]', T+burn+1, 1)
 
@@ -49,14 +47,14 @@ function estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.5, r = 0.05/4, T = 5000, 
         uxt[t+1, :] = 1 .- (Sxt[t, :] .> 0) .* ((1 - δ) .* (1 .- uxt[t, :]) + λ0 .* uxt[t, :])
     end
 
-    sel = burn+1:T+burn;
+    sel = (burn+1):(T+burn);
     yt = yt[sel]
     uxt = uxt[sel, :]
     Sxt = Sxt[sel, :]
     ut = uxt * l
 
     # Exit Rate from Unemployment
-    ft = (((Sxt .> 0).*uxt) * l) .* λ0 ./ut
+    ft = ((((Sxt .> 0).*uxt) * l) .* λ0) ./ut
     # Quit Rate
     qt = (((Sxt .> 0).*(1 .- uxt))*l) .* (0.12 * λ0 * τ) ./(1 .- ut)
     # Layoff Rate
