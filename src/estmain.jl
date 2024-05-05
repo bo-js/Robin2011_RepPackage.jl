@@ -5,6 +5,7 @@ using Distributions
 using Random
 using Optimization
 using OptimizationNLopt
+using DelimitedFiles
 
 # Initialisation
 global N = 150
@@ -97,3 +98,4 @@ params_opt2 = Dict(
     :C => exp(params_opt[8])
 )
 
+writedlm("x1.txt", params_opt)

@@ -32,6 +32,9 @@ include("grids.jl")
 
 include("estCrit.jl")
 
+include("params_in.jl")
+
+export params_in
 export estCrit
 export grids
 export wage_dens_path
