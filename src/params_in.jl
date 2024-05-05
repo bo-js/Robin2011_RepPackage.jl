@@ -1,4 +1,4 @@
-function params_in(; path = "x1.txt")
+function params_estimated(; path = "x1.txt")
     b = parse.(Float64, readlines(path))
     
     logit = x -> 1/(1 + exp(x))

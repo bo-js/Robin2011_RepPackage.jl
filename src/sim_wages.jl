@@ -7,7 +7,7 @@ using Robin2011_RepPackage
 M = 500
 N = 100
 
-b = params_in()
+b = params_estimated()
 
 r = b.r
 
@@ -20,6 +20,7 @@ r = b.r
 ν = b.ν
 μ = b.μ
 τ = b.τ
+β = b.β
 
 
 dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
