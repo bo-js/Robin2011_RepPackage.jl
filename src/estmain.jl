@@ -82,11 +82,7 @@ f = OptimizationFunction((b, _) -> estCrit(b; draw = draw, burn = burn, b0 = b0,
 
 prob = OptimizationProblem(f, x0)
 
-function callback()
-    
-    return false
-end
-sol = solve(prob, NLopt.LN_COBYLA(); maxiters = 100000,reltol = 1e-4 )
+sol = solve(prob, NLopt.LN_NELDERMEAD(); maxiters = 100000,reltol = 1e-4 )
 
 params_opt = sol.u
 
