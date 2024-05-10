@@ -23,7 +23,7 @@ r = b.r
 β = b.β
 
 
-dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
+dta = CSV.read("/Users/lewinnolden/Computational Economics/term_project/Robin 2011 Rep Files/USquarterly.csv", DataFrame, header = false)
 
 filter!(row -> !isnan(row.Column1) && !isnan(row.Column4), dta);
 
@@ -63,6 +63,9 @@ wd = WageVFI(Sx, Π, z; λ1 = λ1, β = β)
 
 ##Steady State
 ux = (δ/(δ + λ0)) .* (Sx .> 0) + (Sx .<= 0)
+
+L = (Sx .> 0) .* l
+u = 1 - λθ .* L ./ (δ + λθ)
 
 ## Initial Conditions
 burn = 0;

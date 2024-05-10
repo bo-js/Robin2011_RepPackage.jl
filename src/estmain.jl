@@ -17,7 +17,7 @@ global α = 0.5;
 global τ = 0.5;
 global k = 0.12;
 
-dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
+dta = CSV.read("/Users/lewinnolden/Computational Economics/term_project/Robin 2011 Rep Files/USquarterly.csv", DataFrame, header = false)
 
 filter!(row -> !isnan(row.Column1) && !isnan(row.Column4), dta);
 
