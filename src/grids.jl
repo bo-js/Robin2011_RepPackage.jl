@@ -1,5 +1,4 @@
-using Distributions
-using Copulas
+export grids
 
 """
 grids(; M = 500, N = 100, ρ = 0.913702234286476, σ = 0.0257,ν::Number = 2.019365636076711, μ::Number = 5.786082109731152 )
