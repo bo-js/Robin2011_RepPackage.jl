@@ -5,6 +5,7 @@ using Copulas
 using LinearAlgebra
 using Distributions
 
+export matchprod
 """
 matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
 
@@ -17,6 +18,8 @@ function matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.7257673589
     return y * (B * x .+ C)'
 end
 
+export homeprod
+
 """
 homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.64, z0::Number = 0.766752794650811)
 
@@ -28,6 +31,8 @@ Default parameter values are those used in Robin (2011).
 function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.64, z0::Number = 0.766752794650811)
     return z0 .+ α * (matchprod(x, y; B, C) .- z0)
 end
+
+export SurplusVFI
 
 """
 SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.9466)
@@ -64,10 +69,7 @@ include("params_in.jl")
 export params_estimated
 export estCrit
 export wage_dens_path
-export SurplusVFI
 export WageVFI
-export matchprod
-export homeprod
 export unemp_path
 
 end
