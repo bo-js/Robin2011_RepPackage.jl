@@ -4,17 +4,27 @@ using Distributions
 using LinearAlgebra
 using Robin2011_RepPackage
 
+M = 500
+N = 100
 
-r::Number = 0.05/4
+b = params_estimated()
+
+r = b.r
 
 ## Parameter Values - Change for when we estimate
-δ::Number = 0.041563759920623
-λ0::Number = 0.994544861919718
-λ1::Number = 0.119345383430366
-ρ = 0.913702234286476
-ν::Number = 2.019365636076711
-μ::Number = 5.786082109731152
-τ::Number = 0.5
+δ = b.δ
+λ0 = b.λ0
+λ1 = b.λ1
+ρ = b.ρ
+σ = b.σ
+ν = b.ν
+μ = b.μ
+τ = b.τ
+β = b.β
+α = b.α
+B = b.B
+C = b.C
+z0 = b.z0
 
 
 dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
@@ -39,19 +49,27 @@ qtr = collect(dta.Column9);
 time = year + qtr./4;
 
 ### Define Grids
-include("grids.jl")
+grid = grids(; M = M, N = N, ν = ν, μ = μ, ρ = ρ, σ = σ)
+x = grid[:x]
+y = grid[:y]
+F = grid[:F]
+Π = grid[:Π]
+l = grid[:l]
 
 ##Production and Surplus
-p = matchprod(x, y)
-z = homeprod(x, y)
-Sx = SurplusVFI(p, z, Π)
+p = matchprod(x, y;B = B, C = C )
+z = homeprod(x, y;B = B, α = α, C = C, z0 = z0)
+Sx = SurplusVFI(p, z, Π; β = β)
 Ux = (I(N) - Π./(1 + r))\z
 
 ## Wages
-wd = WageVFI(Sx, Π, z)
+wd = WageVFI(Sx, Π, z; λ1 = λ1, β = β)
 
 ##Steady State
 ux = (δ/(δ + λ0)) .* (Sx .> 0) + (Sx .<= 0)
+
+L = (Sx .> 0) * l
+u = 1 .- (λ0 .* L ./ (δ + λ0))
 
 ## Initial Conditions
 burn = 0;
@@ -93,7 +111,7 @@ end
 ut = uxt * l
 
 ## Wage Dynamics
-wdt = wage_dens_path(Sx, uxt, wd, l, Ux, statet, T1)
+wdt = wage_dens_path(Sx, uxt, wd, l, Ux, statet, T1; λ0 = λ0, λ1 = λ1, δ = δ)
 
 ## Turnover Dynamics
 ft = [λ0 * sum((Sx[statet[t], m] > 0) * uxt[t, m] * l[m] for m in 1:M)/ut[t] for t in 1:T1]

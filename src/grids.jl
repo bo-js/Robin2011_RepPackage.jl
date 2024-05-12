@@ -1,22 +1,28 @@
-using Distributions
-using Copulas
+export grids
 
-trim = 0.002
-M = 500
-N = 100
-σ = 0.0257
+"""
+grids(; M = 500, N = 100, ρ = 0.913702234286476, σ = 0.0257,ν::Number = 2.019365636076711, μ::Number = 5.786082109731152 )
 
-x = collect(LinRange(trim, 1 - trim, M))
-F = collect(LinRange(trim, 1- trim, N))
-y = exp.(σ * quantile(Normal(), F))
-l = pdf(Beta(ν, μ), x)
-l = l ./ sum(l)
+This function takes parameter values and constructs the grids and distributions of worker types and aggregate shocks, which it returns in a Dict.
 
-Σ = [1 ρ
-     ρ 1]
+"""
+function grids(; M = 500, N = 100, ρ = 0.913702234286476, σ = 0.0257,ν::Number = 2.019365636076711, μ::Number = 5.786082109731152 )
+     trim = 0.002
 
-cop = GaussianCopula(Σ)
+     x = collect(LinRange(trim, 1 - trim, M))
+     F = collect(LinRange(trim, 1- trim, N))
+     y = exp.(σ * quantile(Normal(), F))
+     l = pdf(Beta(ν, μ), x)
+     l = l ./ sum(l)
 
-P = [pdf(cop, [F[i], F[j]]) for i in 1:N, j in 1:N ]
+     Σ = [1 ρ
+          ρ 1]
 
-Π = [P[i, j]/sum(P[i, :]) for i in 1:N, j in 1:N]
+     cop = GaussianCopula(Σ)
+
+     P = [pdf(cop, [F[i], F[j]]) for i in 1:N, j in 1:N ]
+
+     Π = [P[i, j]/sum(P[i, :]) for i in 1:N, j in 1:N]
+
+     return Dict(:x => x, :y => y, :F => F, :l => l,:Π => Π)
+end
