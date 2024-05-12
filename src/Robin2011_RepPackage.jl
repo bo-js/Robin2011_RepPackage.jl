@@ -1,13 +1,31 @@
 module Robin2011_RepPackage
 
+using Distributions
+using Copulas
 using LinearAlgebra
 using Distributions
+
+"""
+matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
+
+Takes the worker and aggregate state grids, as well as the parameters B and C, and returns the matrix of match productivities.
+
+Default parameter values are those used in Robin (2011).
+"""
 
 function matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
     return y * (B * x .+ C)'
 end
 
-function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.75, z0::Number = 0.766752794650811)
+"""
+homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.64, z0::Number = 0.766752794650811)
+
+Takes the worker and aggregate state grids, as well as the parameters B, C, α, and returns the matrix of home production.
+
+Default parameter values are those used in Robin (2011).
+"""
+
+function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.64, z0::Number = 0.766752794650811)
     return z0 .+ α * (matchprod(x, y; B, C) .- z0)
 end
 
@@ -45,7 +63,6 @@ include("params_in.jl")
 
 export params_estimated
 export estCrit
-export grids
 export wage_dens_path
 export SurplusVFI
 export WageVFI
