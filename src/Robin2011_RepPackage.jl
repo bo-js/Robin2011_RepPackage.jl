@@ -5,7 +5,8 @@ using Copulas
 using LinearAlgebra
 using Distributions
 
-export matchprod
+export SurplusVFI, matchprod, homeprod
+
 """
 matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
 
@@ -13,26 +14,20 @@ Takes the worker and aggregate state grids, as well as the parameters B and C, a
 
 Default parameter values are those used in Robin (2011).
 """
-
 function matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
     return y * (B * x .+ C)'
 end
 
-export homeprod
-
 """
-homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.64, z0::Number = 0.766752794650811)
+homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.726, α::Number = 0.64, z0::Number = 0.767)
 
 Takes the worker and aggregate state grids, as well as the parameters B, C, α, and returns the matrix of home production.
 
 Default parameter values are those used in Robin (2011).
 """
-
 function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686, α::Number = 0.64, z0::Number = 0.766752794650811)
     return z0 .+ α * (matchprod(x, y; B, C) .- z0)
 end
-
-export SurplusVFI
 
 """
 SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.9466)
@@ -41,7 +36,7 @@ Performs Value Function Iteration on the Surplus Function, returns the resulting
 
 Takes as inputs the matrix of match productivities p, the matrix of home production z, the markov transition matrix Π, and the parameter β as a keyword argument.
 
-β should be set to equal (1-δ)/(1+r).
+β should be set to equal (1-δ)/(1+r), it's default is the value used in Robin(2011).
 """
 function SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.946603693905558)
     S = (I(length(Π[1,:])) - β .* Π )\(p - z)
