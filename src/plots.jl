@@ -2,6 +2,8 @@ using Plots
 
 # Figure 4 Panel A
 
+include("sim_wages.jl")
+
 minp = [minimum(p[i, Sx[i, :] .> 0]) for i in 1:N]
 
 function fig4a()

@@ -11,6 +11,15 @@ function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.72576735891
     return z0 .+ α * (matchprod(x, y; B, C) .- z0)
 end
 
+"""
+SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.9466)
+
+Performs Value Function Iteration on the Surplus Function, returns the resulting Surplus function matrix.
+
+Takes as inputs the matrix of match productivities p, the matrix of home production z, the markov transition matrix Π, and the parameter β as a keyword argument.
+
+β should be set to equal (1-δ)/(1+r).
+"""
 function SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.946603693905558)
     S = (I(length(Π[1,:])) - β .* Π )\(p - z)
     e = norm(S - max.(S, 0), 2)
