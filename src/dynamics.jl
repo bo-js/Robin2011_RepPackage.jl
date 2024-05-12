@@ -1,3 +1,23 @@
+
+"""
+`function unemp_path(S::Matrix, statet::Vector, T::Integer; λ0::Number = 0.994544861919718, δ::Number = 0.041563759920623)`
+
+This function calculates the unemployment path for a given evolution of the aggregate state.
+
+The Function takes as arguments:
+
+- S, the surplus matrix, calculated using [`SurplusVFI`](@ref)
+- statet, a given evolution of the aggregate state index through time
+- T, the number of periods
+
+As well as parameters:
+
+- λ0, the rate at which an unemployed worker meets a firm 
+- δ, the exogeneous job offer separatioin rate
+
+
+The default parameter values are those used in Robin(2011).
+"""
 function unemp_path(S::Matrix, statet::Vector, T::Integer; λ0::Number = 0.994544861919718, δ::Number = 0.041563759920623)
     M = length(S[1, :])
 
@@ -13,6 +33,36 @@ function unemp_path(S::Matrix, statet::Vector, T::Integer; λ0::Number = 0.99454
 
 end
 
+
+
+"""
+`function wage_dens_path(S::Matrix, uxt::Matrix, wd::Dict, l::Vector, U::Matrix, statet::Vector, T::Integer; λ0::Number = 0.9945, λ1::Number = 0.1193, δ::Number = 0.0416)`
+
+Wages are assigned through Bertrand Competition, resulting either in workers being paid their 
+reservation wage (the monopsony wage), when being hired from unemployment, or capturing the full surplus when being poached. 
+However, since workers do not receive a poaching offer every period, you may observe multiple wages at every single point in time.
+Furthermore, changes in the state may make it so that either the worker or the firm have a credible threat to leave/ fire leading to renegotiation of the wage.
+
+This function calculates the wage density path for a given evolution of the aggregate state, giving the density of all possible wages at each point in time.
+
+
+
+The Function takes as arguments:
+
+- S, the surplus matrix, calculated using [`SurplusVFI`](@ref)
+- uxt, the unemployment path, calculated using [`unemp_path'](@ref)
+- wd, a Dict including the minimum and the maximum wage in each period as well as their current value, calculated using [`WageVFI`](@ref)
+- l, the number of workers of each type, calculated using [`grids`](@ref)
+- U, the value of unemployment 
+- statet, a given evolution of the aggregate state index through time
+- T, the number of periods
+
+As well as parameters:
+
+- λ0, the rate at which an unemployed worker meets a firm 
+
+The default parameter values are those used in Robin(2011).
+"""
 function wage_dens_path(S::Matrix, uxt::Matrix, wd::Dict, l::Vector, U::Matrix, statet::Vector, T::Integer; λ0::Number = 0.994544861919718, λ1::Number = 0.119345383430366, δ::Number = 0.041563759920623)
     M = length(S[1, :])
 
