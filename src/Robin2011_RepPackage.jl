@@ -8,9 +8,9 @@ using Distributions
 export SurplusVFI, matchprod, homeprod
 
 """
-matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)
+`matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.725767358913686)`
 
-Takes the worker and aggregate state grids, as well as the parameters B and C, and returns the matrix of match productivities.
+Takes the worker and aggregate state grids, as well as the parameters `B` and `C`, and returns the worker x state matrix of match productivities.
 
 Default parameter values are those used in Robin (2011).
 """
@@ -19,9 +19,9 @@ function matchprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.7257673589
 end
 
 """
-homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.726, α::Number = 0.64, z0::Number = 0.767)
+`homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.726, α::Number = 0.64, z0::Number = 0.767)``
 
-Takes the worker and aggregate state grids, as well as the parameters B, C, α, and returns the matrix of home production.
+Takes the worker and aggregate state grids, as well as the parameters `B`, `C`, `α`, and returns the worker x state matrix of home production.
 
 Default parameter values are those used in Robin (2011).
 """
@@ -30,9 +30,9 @@ function homeprod(x::Vector, y::Vector; B::Number = 1, C::Number = 0.72576735891
 end
 
 """
-SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.9466)
+`SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.9466)`
 
-Performs Value Function Iteration on the Surplus Function, returns the resulting Surplus function matrix.
+Performs Value Function Iteration on the Surplus Function, returns the resulting worker x state Surplus function matrix.
 
 Takes as inputs the matrix of match productivities p, the matrix of home production z, the markov transition matrix Π, and the parameter β as a keyword argument.
 
