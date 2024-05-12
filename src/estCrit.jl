@@ -1,3 +1,43 @@
+"""
+`estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.64, r = 0.05/4, T = 5000, burn = 1000, draw = rand(burn+T, 1), b0 = [1, 0.0226, 0.9136, 0.0579, 0.2141, 2.5296, 0.7842])`
+
+estCrit takes a set of transformed parameter values `b`, simulates an economy of length `T+burn` based on an evolution of the aggregate state
+given in the keyword argument `draw` (which should be a `T+burn` long series of draws from a `Unif(0,1)` distribution), drops the first `draw` periods and 
+calculates the simulated targeted moments, before finally calculating the distance from the equivalent moments in the data, given by keyword argument `b0`.
+
+`b` should be a vector which contains a guess of the parameters to be estimated. They should be ordered and transformed in the following way:
+- `log(ν)`
+- `log(μ)`
+- `loginv(δ)`
+- `loginv(λ0)`
+- `atanh(ρ)`
+- `log(σ)`
+- `log(z0)`
+- `log(C)`
+Where `logit = x -> 1/(1+exp(x))` and `loginv = x -> log(1/x - 1)`.
+
+
+External parameters are given by the following keyword arguments, with defaults set to those used in Robin (2011).
+- `τ` is the tie-breaking probability for poachers
+- `α` is the elasticity of wages to productivity - this doesn't matter for estimation but must be specified.
+- `r` is the interest rate.
+
+Other keyword arguments include
+- `M` the length of the worker ability grid
+- `N` the length of the aggregate state grid
+- `T` the number of time periods to be used in the estimation
+- `burn` the number of additional time periods to be simulated at the beginning of the economy and then dropped to remove reliance on starting values.
+- `b0` a vector of the moments calculated from the data.
+
+The targeted moments are:
+- Average Productivity
+- Standard Deviation of Productivity
+- Autocorrelation of Productivity
+- Average Unemployment Rate
+- Standard Deviation of the Unemployment Rate
+- Kurtosis of the Unemployment Rate
+- Average Exit Rate from Unemployment
+"""
 function estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.64, r = 0.05/4, T = 5000, burn = 1000, draw = rand(burn+T, 1), b0 = [1, 0.0226, 0.9136, 0.0579, 0.2141, 2.5296, 0.7842])
 
     logit = x -> 1/(1 + exp(x))
@@ -20,7 +60,7 @@ function estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.64, r = 0.05/4, T = 5000,
 
     p = matchprod(x, y; B = 1, C = C)
 
-    z = homeprod(x, y; B = 1, C = C, α = 0.5, z0 = z0)
+    z = homeprod(x, y; B = 1, C = C, α = α, z0 = z0)
 
     Ux = (I(N) - Π./(1 + r))\z
 

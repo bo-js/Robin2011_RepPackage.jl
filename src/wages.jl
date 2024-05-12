@@ -1,3 +1,27 @@
+"""
+`WageVFI(S::Matrix, Π::Matrix, z::Matrix; λ1 = 0.119, β::Number = 0.9466)`
+
+This function calculates equilibrium wages, as well as their associated value functions.
+
+Wages are assigned through Bertrand Competition, resulting either in workers being paid their reservaiton wage (the monopsony wage), when being hired from unemployment, or capturing the full surplus when being poached.
+
+The Function returns a Dict with keys:
+- `:wmin`, an `i x j` matrix giving the monopsony wage assigned to worker `j`, being hired out of unemployment in state `i`.
+- `:wmax`, an `i x j` matrix giving the full surplus wage assigned to worker `j`, being poached in state `i`.
+- `:Wmin`, an `i x j x k` array giving the value of worker `k`, being in state `i`, with the monopsony wage from state `j`.
+- `:Wmax`, an `i x j x k` array giving the value of worker `k`, being in state `i`, with the poacher's wage from state `j`.
+
+The Function takes as arguments:
+- `S`, the surplus matrix, calculated using [`SurplusVFI`](@ref).
+- `Π`, the markov transition matrix, calculated using [`grids`](@ref).
+- `z`, the home production matrix, calculated using [`homeprod`](@ref).
+
+As well as parameters:
+- `λ1`, the probability of meeting a new employer while already employed.
+- `β`, the discounted probability of exogenenous separation, i.e. `(1 - δ)/(1+r)`.
+
+The default parameter values are those used in Robin(2011).
+"""
 function WageVFI(S::Matrix, Π::Matrix, z::Matrix; λ1 = 0.119345383430366, β::Number = 0.946603693905558)
     
     N = length(Π[1, :])
