@@ -64,8 +64,8 @@ wd = WageVFI(Sx, Π, z; λ1 = λ1, β = β)
 ##Steady State
 ux = (δ/(δ + λ0)) .* (Sx .> 0) + (Sx .<= 0)
 
-L = (Sx .> 0) .* l
-u = 1 - λθ .* L ./ (δ + λθ)
+L = (Sx .> 0) * l
+u = 1 .- (λ0 .* L ./ (δ + λ0))
 
 ## Initial Conditions
 burn = 0;
