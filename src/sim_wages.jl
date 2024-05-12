@@ -27,7 +27,7 @@ C = b.C
 z0 = b.z0
 
 
-dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
+dta = CSV.read("/Users/lewinnolden/Computational Economics/term_project/Robin 2011 Rep Files/USquarterly.csv", DataFrame, header = false)
 
 filter!(row -> !isnan(row.Column1) && !isnan(row.Column4), dta);
 

@@ -2,4 +2,8 @@
 /docs/Manifest.toml
 /docs/build/
 /.DS_Store
+<<<<<<< HEAD
 /docs/.DS_Store
+=======
+/docs/.DS_Store
+>>>>>>> d5e239b1b941e5317414dca98593e3a1faf486da
