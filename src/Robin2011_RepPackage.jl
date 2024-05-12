@@ -36,7 +36,7 @@ Performs Value Function Iteration on the Surplus Function, returns the resulting
 
 Takes as inputs the matrix of match productivities p, the matrix of home production z, the markov transition matrix Π, and the parameter β as a keyword argument.
 
-β should be set to equal (1-δ)/(1+r), it's default is the value used in Robin(2011).
+β should be set to equal (1-δ)/(1+r), it's default is the value used in Robin (2011).
 """
 function SurplusVFI(p::Matrix, z::Matrix, Π::Matrix; β::Number = 0.946603693905558)
     S = (I(length(Π[1,:])) - β .* Π )\(p - z)
