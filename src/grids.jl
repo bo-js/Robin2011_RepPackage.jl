@@ -6,7 +6,6 @@ grids(; M = 500, N = 100, ρ = 0.913702234286476, σ = 0.0257,ν::Number = 2.019
 This function takes parameter values and constructs the grids and distributions of worker types and aggregate shocks, which it returns in a Dict.
 
 """
-
 function grids(; M = 500, N = 100, ρ = 0.913702234286476, σ = 0.0257,ν::Number = 2.019365636076711, μ::Number = 5.786082109731152 )
      trim = 0.002
 
