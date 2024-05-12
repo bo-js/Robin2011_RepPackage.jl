@@ -21,6 +21,10 @@ r = b.r
 μ = b.μ
 τ = b.τ
 β = b.β
+α = b.α
+B = b.B
+C = b.C
+z0 = b.z0
 
 
 dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
@@ -63,6 +67,9 @@ wd = WageVFI(Sx, Π, z; λ1 = λ1, β = β)
 
 ##Steady State
 ux = (δ/(δ + λ0)) .* (Sx .> 0) + (Sx .<= 0)
+
+L = (Sx .> 0) * l
+u = 1 .- (λ0 .* L ./ (δ + λ0))
 
 ## Initial Conditions
 burn = 0;
