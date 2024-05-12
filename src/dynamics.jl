@@ -49,7 +49,7 @@ giving the density of workers earning each of the possible wages at each point i
 The Function takes as arguments:
 
 - `S`, the surplus matrix, calculated using [`SurplusVFI`](@ref)
-- `uxt`, the unemployment path, calculated using [`unemp_path'](@ref)
+- `uxt`, the unemployment path, calculated using [`unemp_path`](@ref)
 - `wd`, a Dict including the minimum and the maximum wage in each period as well as their current value, calculated using [`WageVFI`](@ref)
 - `l`, the number of workers of each type, calculated using [`grids`](@ref)
 - `U`, the value of unemployment 
