@@ -1,8 +1,8 @@
-# Robin2011_RepPackage
+Replication exercise for "Computational Economics" taught by Prof. Florian Oswald, SciencesPo Master of Economics, 2023/2024. Authors: Bo Jacobs-Strom and Lewin Nolden.
 
 ### Overview
 
-This is the ReadMe for Robin2011_RepPackage.jl, a julia package to replicated Robin (2011), "On the Dynamics of Unemployment and Wage Distributions", Econometrica, Vol. 79, No 5. (September 2011), 1327-1355.
+This is the ReadMe for Robin2011_RepPackage.jl, a julia package to replicate Robin (2011), "On the Dynamics of Unemployment and Wage Distributions", Econometrica, Vol. 79, No 5. (September 2011), 1327-1355.
 
 All code for Robin (2011) was originally written in Matlab and Stata and can be retrieved from the website of the Econometrics Society [here](https://www.econometricsociety.org/publications/econometrica/2011/09/01/dynamics-unemployment-and-wage-distributions/supp/9070_data%20and%20programs_0.zip).
 
@@ -11,6 +11,10 @@ All code for Robin (2011) was originally written in Matlab and Stata and can be 
 ### Data Availability 
 
 The data used for this replication is entirely available at the website of the Econometrics Society [here](https://www.econometricsociety.org/publications/econometrica/2011/09/01/dynamics-unemployment-and-wage-distributions/supp/9070_data%20and%20programs_0.zip). The author himself has procured the data from the US Bureau of Labor Statistics.
+
+To replicate Robin (2011) using this Julia package, replicators are required to download the data from the original replication package under the link above.
+
+
 
 ### Computational Requirements
 #### Software Requirements
@@ -39,7 +43,7 @@ The code was last run on MacBook Pro M2, 16GB, MacOS 13.06. On this device, appr
 |sim_wages.jl|simulates wages| 65 seconds |
 
 #### Instructions to Replicators
-To replicated the results generated using Robin2011_RepPackage.jl, change the paths in estmain.jl and sim_wages.jl to where you placed the replication files on your computer. Then run estmain.jl, which generates the estimated model parameters, followed by plots.jl, which runs sim_wages.jl and generates plots from the simulated data. The content of all functions used in the abovementioned script can be found in the documentation section of our GitHub page.
+To replicate the results generated using Robin2011_RepPackage.jl, change the paths in estmain.jl and sim_wages.jl to where you placed the replication files on your computer. Make sure the paths lead to the data files procured from the original replication package available at the Econometrics Society's website (see above). Then run estmain.jl, which generates the estimated model parameters, followed by plots.jl, which runs sim_wages.jl and generates plots from the simulated data. The content of all functions used in the abovementioned script can be found in the documentation section of our GitHub page [here](https://bo-js.github.io/Robin2011_RepPackage.jl/dev/).
 
 #### Outputs
 
@@ -51,7 +55,3 @@ To replicated the results generated using Robin2011_RepPackage.jl, change the pa
 |fig10_plot.png| Figure 10, p. 1352| Starting and promotion wages for various ability quantiles |
 
 
-
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://bo-js.github.io/Robin2011_RepPackage.jl/stable/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://bo-js.github.io/Robin2011_RepPackage.jl/dev/)
-[![Build Status](https://github.com/bo-js/Robin2011_RepPackage.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/bo-js/Robin2011_RepPackage.jl/actions/workflows/CI.yml?query=branch%3Amain)
