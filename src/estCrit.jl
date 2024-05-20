@@ -20,7 +20,7 @@ Where `logit = x -> 1/(1+exp(x))` and `loginv = x -> log(1/x - 1)`.
 External parameters are given by the following keyword arguments, with defaults set to those used in Robin (2011).
 - `τ` is the tie-breaking probability for poachers
 - `α` is the elasticity of wages to productivity - this doesn't matter for estimation but must be specified.
-- `r` is the interest rate.
+- `r` is the quarterly interest rate.
 
 Other keyword arguments include
 - `M` the length of the worker ability grid
