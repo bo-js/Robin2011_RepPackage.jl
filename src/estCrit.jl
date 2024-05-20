@@ -2,7 +2,7 @@
 `estCrit(b; M = 500, N = 100, τ = 0.5, α = 0.64, r = 0.05/4, T = 5000, burn = 1000, draw = rand(burn+T, 1), b0 = [1, 0.0226, 0.9136, 0.0579, 0.2141, 2.5296, 0.7842])`
 
 estCrit takes a set of transformed parameter values `b`, simulates an economy of length `T+burn` based on an evolution of the aggregate state
-given in the keyword argument `draw` (which should be a `T+burn` long series of draws from a `Unif(0,1)` distribution), drops the first `draw` periods and 
+given in the keyword argument `draw` (which should be a `T+burn` long series of draws from a `Unif(0,1)` distribution), drops the first `burn` periods and 
 calculates the simulated targeted moments, before finally calculating the distance from the equivalent moments in the data, given by keyword argument `b0`.
 
 `b` should be a vector which contains a guess of the parameters to be estimated. They should be ordered and transformed in the following way:
