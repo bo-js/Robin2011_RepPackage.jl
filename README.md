@@ -30,6 +30,7 @@ To replicate Robin (2011) using this Julia package, replicators are required to 
   - OptimizationNLopt 
   - Plots 
   - Revise 
+
 The correct package versions can be installed by running the following code in the Julia REPL while in the root directory of the repo:
 ```
 using Pkg
