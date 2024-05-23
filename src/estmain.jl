@@ -17,9 +17,9 @@ global α = 0.5;
 global τ = 0.5;
 global k = 0.12;
 
-dta = CSV.read("/Users/bojs/Desktop/Robin 2011 Rep Files/matlab/USquarterly.csv", DataFrame, header = false)
+dta = CSV.read(joinpath(@__DIR__,"..","data","USquarterly.raw"), DataFrame, header = false)
 
-filter!(row -> !isnan(row.Column1) && !isnan(row.Column4), dta);
+filter!(row -> (!ismissing(row.Column1)) && (!ismissing(row.Column4)), dta);
 
 prod = collect(dta.Column1);
 prod = prod/mean(prod);

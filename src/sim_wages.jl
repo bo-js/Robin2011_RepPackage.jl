@@ -27,9 +27,9 @@ C = b.C
 z0 = b.z0
 
 
-dta = CSV.read("/Users/lewinnolden/Computational Economics/term_project/Robin 2011 Rep Files/USquarterly.csv", DataFrame, header = false)
+dta = CSV.read(joinpath(@__DIR__,"..","data","USquarterly.raw"), DataFrame, header = false)
 
-filter!(row -> !isnan(row.Column1) && !isnan(row.Column4), dta);
+filter!(row -> (!ismissing(row.Column1)) && (!ismissing(row.Column4)), dta);
 
 prod = collect(dta.Column1);
 

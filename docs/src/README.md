@@ -12,14 +12,14 @@ All code for Robin (2011) was originally written in Matlab and Stata and can be 
 
 The data used for this replication is entirely available at the website of the Econometrics Society [here](https://www.econometricsociety.org/publications/econometrica/2011/09/01/dynamics-unemployment-and-wage-distributions/supp/9070_data%20and%20programs_0.zip). The author himself has procured the data from the US Bureau of Labor Statistics.
 
-To replicate Robin (2011) using this Julia package, replicators are required to download the data from the original replication package under the link above.
+To replicate Robin (2011) using this Julia package, replicators are required to download the data from the original replication package under the link above and place the `USquarterly.raw` datafile in the data folder of this repo.
 
 
 
 ### Computational Requirements
 #### Software Requirements
 - Julia (version used for this replication exercise: 1.9)
-- The following julia packages need to be installed. The versions of all packages can be found in Manifest.toml
+- The following julia packages need to be installed. The versions of all packages can be found in Manifest.toml.
   - CSV 
   - Copulas 
   - DataFrames
@@ -30,6 +30,12 @@ To replicate Robin (2011) using this Julia package, replicators are required to 
   - OptimizationNLopt 
   - Plots 
   - Revise 
+The correct package versions can be installed by running the following code in the Julia REPL while in the root directory of the repo:
+```
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+```
   
 #### Memory and Run-time Requirements
 The code was last run on MacBook Pro M2, 16GB, MacOS 13.06. On this device, approximate run time is about 180 seconds.
@@ -38,7 +44,7 @@ The code was last run on MacBook Pro M2, 16GB, MacOS 13.06. On this device, appr
 
 |Script|Content|Run-time|
 |---|---|---|
-|estmain.jl|estimates the model| 110 seconds |
+|estmain.jl|estimates the model| 120 seconds |
 |plots.jl|runs sim_wages.jl and generates plots| 70 seconds |
 |sim_wages.jl|simulates wages| 65 seconds |
 
