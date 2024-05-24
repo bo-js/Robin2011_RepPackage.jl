@@ -1,21 +1,18 @@
 Replication exercise for "Computational Economics" taught by [Prof. Florian Oswald](https://floswald.github.io/), SciencesPo Master of Economics, 2023/2024. Authors: [Bo Jacobs-Strom](https://github.com/bo-js) and [Lewin Nolden](https://github.com/lewinno).
 
 The course website is available [here](https://floswald.github.io/NumericalMethods/).
+
 ### Overview
 
 This is the ReadMe for Robin2011_RepPackage.jl, a julia package to replicate Robin (2011), "On the Dynamics of Unemployment and Wage Distributions", Econometrica, Vol. 79, No 5. (September 2011), 1327-1355.
 
-All code for Robin (2011) was originally written in Matlab and Stata and can be retrieved from the website of the Econometrics Society [here](https://www.econometricsociety.org/publications/econometrica/2011/09/01/dynamics-unemployment-and-wage-distributions/supp/9070_data%20and%20programs_0.zip).
-
-
+All original code for Robin (2011) was written in Matlab and Stata and can be retrieved from the website of the Econometrics Society [here](https://www.econometricsociety.org/publications/econometrica/2011/09/01/dynamics-unemployment-and-wage-distributions/supp/9070_data%20and%20programs_0.zip).
 
 ### Data Availability 
 
 The data used for this replication is entirely available at the website of the Econometrics Society [here](https://www.econometricsociety.org/publications/econometrica/2011/09/01/dynamics-unemployment-and-wage-distributions/supp/9070_data%20and%20programs_0.zip). The author himself has procured the data from the US Bureau of Labor Statistics.
 
 To replicate Robin (2011) using this Julia package, replicators are required to download the data from the original replication package under the link above and place the `USquarterly.raw` datafile in the data folder of this repo.
-
-
 
 ### Computational Requirements
 #### Software Requirements
